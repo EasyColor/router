@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface RouteService {
 
-    List<RoutePresentation> getRoute(Integer origin, Integer destination);
+    RoutePresentation getRoute(Integer origin, Integer destination);
 
 }

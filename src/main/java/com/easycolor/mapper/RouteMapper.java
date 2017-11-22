@@ -13,9 +13,9 @@ public class RouteMapper {
         return RoutePresentation.builder()
                 .routeOrigin(routeEntity.getRouteOrigin())
                 .routeDestination(routeEntity.getRouteDestination())
-                .firstColor(routeEntity.getFirstColor().getColors())
-                .secondColor(routeEntity.getSecondColor().getColors())
-                .thirdColor(routeEntity.getThirdColor().getColors())
+                .firstColor(RouteColor.getColors(routeEntity.getFirstColor()))
+                .secondColor(RouteColor.getColors(routeEntity.getSecondColor()))
+                .thirdColor(RouteColor.getColors(routeEntity.getThirdColor()))
                 .assigned(routeEntity.getAssigned())
                 .capacity(routeEntity.getCapacity())
                 .build();

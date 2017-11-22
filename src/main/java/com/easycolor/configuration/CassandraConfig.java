@@ -4,16 +4,15 @@ import com.datastax.driver.core.AuthProvider;
 import com.datastax.driver.core.HostDistance;
 import com.datastax.driver.core.PlainTextAuthProvider;
 import com.datastax.driver.core.PoolingOptions;
-import com.datastax.driver.core.policies.*;
-import com.google.common.base.Strings;
+import com.datastax.driver.core.policies.ExponentialReconnectionPolicy;
+import com.datastax.driver.core.policies.ReconnectionPolicy;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cassandra.core.keyspace.CreateKeyspaceSpecification;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.data.cassandra.config.java.AbstractCassandraConfiguration;
+import org.springframework.data.cassandra.core.CassandraAdminTemplate;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -39,8 +38,10 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
     @Value("${cassandra.keyspace}")
     private String keyspace;
 
-    @Autowired
-    private Environment environment;
+    @Override
+    public CassandraAdminTemplate cassandraTemplate() throws Exception {
+        return new CassandraAdminTemplate(session().getObject(), cassandraConverter());
+    }
 
     @PostConstruct
     public void logCassandraConfig() {
